@@ -104,12 +104,6 @@ body.admin-panel {
   animation: pulse 0.4s linear infinite;
 }
 
-/* .montserrat {
-  font-family: "Montserrat", sans-serif;
-  font-optical-sizing: auto;
-  font-weight: 200;
-  font-style: normal;
-} */
 
 @media screen and (max-width) {
   .shop {
