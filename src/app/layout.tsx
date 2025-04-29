@@ -66,6 +66,7 @@ export default function RootLayout({
       <html lang="en" className="dark">
         <head>
           <meta name="color-scheme" content="dark" />
+          <meta name="google-site-verification" content="TMra_J8xSUHe1N4BIr2tBGpOiJV-7LITz62767WnPhU" />
           <link rel="preconnect" href="https://fonts.googleapis.com" />
           <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
           <link rel="preload" href="https://res.cloudinary.com/dficko9l8/image/upload/v1743685582/Mobile_wcue4b.png" as="image" type="image/png" />
