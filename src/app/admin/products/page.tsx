@@ -12,9 +12,8 @@ export default function ProductsPage() {
     const handleSyncProducts = async () => {
       try {
         setIsLoading(true);
-        const response = await apiClient.get("/api/merchant/sync")
+        await apiClient.get("/api/merchant/sync")
         toast.success("Products synced successfully to merchant store")
-        console.log(response)
       } catch (error) {
         console.log(error)
         toast.error("Products sync failed to merchant store")
