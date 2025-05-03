@@ -100,7 +100,7 @@ const BestSellers = () => {
                 key={index}
                 className="h-full flex justify-center items-center p-2"
               >
-                <Link href={`/product/${slide.productid}`}>
+                <Link href={`/product/${slide.id}`}>
                   <Slidebox
                     image={slide.img}
                     name={slide.name}

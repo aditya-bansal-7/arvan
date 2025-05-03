@@ -8,7 +8,7 @@ interface TopProducts {
 }
 
 export interface BestSellers {
-    productid: string;
+    id: string;
     name: string;
     price: number;
     discount?: number;
