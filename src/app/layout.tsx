@@ -9,7 +9,6 @@ import { CartProvider } from "@/context/CartContext";
 import { SessionProvider } from "next-auth/react";
 import Providers from "./providers";
 
-
 export const metadata: Metadata = {
   title: "The Arvan",
   description:
@@ -66,14 +65,25 @@ export default function RootLayout({
       <html lang="en" className="dark">
         <head>
           <meta name="color-scheme" content="dark" />
-          <meta name="google-site-verification" content="TMra_J8xSUHe1N4BIr2tBGpOiJV-7LITz62767WnPhU" />
+          <meta
+            name="google-site-verification"
+            content="TMra_J8xSUHe1N4BIr2tBGpOiJV-7LITz62767WnPhU"
+          />
           <link rel="preconnect" href="https://fonts.googleapis.com" />
-          <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-          <link rel="preload" href="https://res.cloudinary.com/dficko9l8/image/upload/v1743685582/Mobile_wcue4b.png" as="image" type="image/png" />
+          <link
+            rel="preconnect"
+            href="https://fonts.gstatic.com"
+            crossOrigin="anonymous"
+          />
+          <link
+            rel="preload"
+            href="https://res.cloudinary.com/dficko9l8/image/upload/v1743685582/Mobile_wcue4b.png"
+            as="image"
+            type="image/png"
+          />
         </head>
         <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-        >
+          className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
           <QueryProvider>
             <Theme>
               <AdminStyles />
@@ -83,6 +93,13 @@ export default function RootLayout({
             </Theme>
           </QueryProvider>
           <Providers />
+          <noscript>
+            <iframe
+              src="https://www.googletagmanager.com/ns.html?id=GTM-T7FDK3D6"
+              height="0"
+              width="0"
+              style={{ display: "none", visibility: "hidden" }}></iframe>
+          </noscript>
         </body>
       </html>
     </SessionProvider>
