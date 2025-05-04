@@ -88,15 +88,16 @@ export default function RootLayout({
           <QueryProvider>
             <Theme>
               <AdminStyles />
+              <Suspense fallback={null}>
+                <RouteChangeTracker />
+              </Suspense>
               <OverlayProvider>
                 <CartProvider>{children}</CartProvider>
               </OverlayProvider>
             </Theme>
           </QueryProvider>
           <Providers />
-          <Suspense fallback={null}>
-            <RouteChangeTracker />
-          </Suspense>
+
           <noscript>
             <iframe
               src="https://www.googletagmanager.com/ns.html?id=GTM-T7FDK3D6"
