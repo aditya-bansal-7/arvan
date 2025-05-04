@@ -8,6 +8,7 @@ import QueryProvider from "@/lib/queryclient";
 import { CartProvider } from "@/context/CartContext";
 import { SessionProvider } from "next-auth/react";
 import Providers from "./providers";
+import RouteChangeTracker from "@/components/RouteChangeTracker";
 
 export const metadata: Metadata = {
   title: "The Arvan",
@@ -93,6 +94,7 @@ export default function RootLayout({
             </Theme>
           </QueryProvider>
           <Providers />
+          <RouteChangeTracker />
           <noscript>
             <iframe
               src="https://www.googletagmanager.com/ns.html?id=GTM-T7FDK3D6"
