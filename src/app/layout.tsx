@@ -9,7 +9,7 @@ import { CartProvider } from "@/context/CartContext";
 import { SessionProvider } from "next-auth/react";
 import Providers from "./providers";
 import RouteChangeTracker from "@/components/RouteChangeTracker";
-
+import { Suspense } from "react";
 export const metadata: Metadata = {
   title: "The Arvan",
   description:
@@ -94,7 +94,9 @@ export default function RootLayout({
             </Theme>
           </QueryProvider>
           <Providers />
-          <RouteChangeTracker />
+          <Suspense fallback={null}>
+            <RouteChangeTracker />
+          </Suspense>
           <noscript>
             <iframe
               src="https://www.googletagmanager.com/ns.html?id=GTM-T7FDK3D6"
