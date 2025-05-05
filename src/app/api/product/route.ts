@@ -2,6 +2,8 @@
 import { prisma } from "@/lib/prisma-client";
 import { NextRequest, NextResponse } from "next/server";
 
+export const runtime = "edge";
+
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
@@ -35,8 +37,15 @@ export async function POST(req: NextRequest) {
         skip,
         take: limit,
         orderBy: { [sortBy]: sortOrder },
+        //@ts-expect-error: Unreachable code error
+        cacheStrategy: { ttl: 600 },
+      }, 
+    ),
+      prisma.product.count({ 
+        where,
+        //@ts-expect-error: Unreachable code error
+        cacheStrategy: { ttl: 600 },
       }),
-      prisma.product.count({ where }),
     ]);
 
     return NextResponse.json({

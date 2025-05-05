@@ -5,6 +5,7 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 model Product {
@@ -15,7 +16,8 @@ model Product {
   discountPrice Float?
   material      String
   category_id   String
-    category      Category     @relation(fields: [category_id], references: [id])
+  avgRating     Float?
+  category      Category     @relation(fields: [category_id], references: [id])
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt
   status        ProductStatus  @default(DRAFT)
@@ -24,6 +26,7 @@ model Product {
   ProductRating  ProductRating[]
   ProductPerformance ProductPerformance[]
   sales         SalesSummary[]
+  OrderItem     OrderItem[]
 }
 
 model ProductColor {
@@ -174,11 +177,19 @@ model Order {
   items       OrderItem[] // Join table for order items
   total       Float
   status      OrderStatus
+  ShipRocketOrderId Int?
+  awb         String?
+  DeliveryStatus String?       @default("PENDING")
+  etd         String?
+  deliveredAt  DateTime?
   paid         Boolean         @default(false)
   fulfillment OrderFulfillment
+  isReturned  Boolean         @default(false)
+  returnedAt   DateTime?
+  returnReason String?
+  returnAdditionalInfo String?
   addressId   String
-  address     Address          @relation(fields: [addressId], references: [id])
-
+  address     Address          @relation(fields: [addressId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -195,6 +206,8 @@ model OrderItem {
   productImage     String
   productName      String
   size             String
+  productId        String
+  product          Product      @relation(fields: [productId], references: [id], onDelete: Cascade)
 }
 enum OrderStatus {
   PENDING
@@ -206,6 +219,7 @@ enum OrderFulfillment {
   PENDING // Added for initial state
   SHIPPED
   DELIVERED
+  RETURNING
   RETURNED
 }
 
@@ -299,4 +313,11 @@ model ShiprocketToken {
   id     Int      @id @default(1)
   token  String
   createdAt DateTime @default(now())
+}
+
+model Upoads {
+  id        String   @id @default(cuid())
+  url       String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
