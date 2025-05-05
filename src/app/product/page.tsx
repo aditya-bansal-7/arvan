@@ -8,7 +8,6 @@ import { Loader, SlidersHorizontal } from "lucide-react";
 import Image from "next/image";
 import React, { useState, useMemo, useEffect, useRef } from "react";
 import type { Product } from "@prisma/client";
-import { getProductsFromServer } from "@/lib/server/getProductsFromServer";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -24,6 +23,7 @@ import {
 } from "@/components/ui/dialog";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
+import axios from "axios";
 
 type SortOption = {
   label: string;
@@ -60,13 +60,18 @@ export default function ProductPage() {
     return () => window.removeEventListener("load", () => setPageLoaded(true));
   }, []);
 
-  const fetchProducts = async ({ pageParam = 1 }: { pageParam: number }) => {
+  const fetchProducts = async ({
+    pageParam = 1,
+  }: {
+    pageParam: number;
+  }) => {
     const limit = 12;
+  
     let minPrice: number | undefined;
     let maxPrice: number | undefined;
-
+  
     const ranges = filters.priceRanges;
-
+  
     if (ranges.includes("Under ₹1000")) {
       minPrice = 0;
       maxPrice = 999;
@@ -82,8 +87,8 @@ export default function ProductPage() {
     if (ranges.includes("Above ₹3000")) {
       minPrice = minPrice !== undefined ? Math.min(minPrice, 3001) : 3001;
     }
-
-    const sortFieldMap: Record<string, keyof Product> = {
+  
+    const sortFieldMap: Record<string, string> = {
       price_asc: "price",
       price_desc: "price",
       name_asc: "name",
@@ -91,7 +96,7 @@ export default function ProductPage() {
       newest: "createdAt",
       oldest: "createdAt",
     };
-
+  
     const sortOrderMap: Record<string, "asc" | "desc"> = {
       price_asc: "asc",
       price_desc: "desc",
@@ -100,17 +105,22 @@ export default function ProductPage() {
       newest: "desc",
       oldest: "asc",
     };
-
-    return getProductsFromServer({
+  
+    const sortByField = sortFieldMap[sortBy];
+    const sortOrder = sortOrderMap[sortBy];
+  
+    const response = await axios.post("/api/product", {
       page: pageParam,
       limit,
-      sortBy: sortFieldMap[sortBy],
-      sortOrder: sortOrderMap[sortBy],
+      sortBy: sortByField,
+      sortOrder,
       minPrice,
       maxPrice,
+      status: "PUBLISHED",
     });
+  
+    return response.data;
   };
-
   const {
     data: products,
     fetchNextPage,
