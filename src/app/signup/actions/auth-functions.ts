@@ -4,7 +4,7 @@ import { signOut } from "@/auth";
 
 import { SignUpSchema } from "@/types/types";
 import { z } from "zod";
-import { prisma } from "@/lib/prisma-client";
+import prisma from "@/lib/prisma-client";
 import bcryptjs from "bcryptjs";
 import { apiClient } from "@/lib/axiosClient";
 

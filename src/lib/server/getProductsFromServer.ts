@@ -1,6 +1,6 @@
 'use server';
 
-import { prisma } from "@/lib/prisma-client";
+import prisma from "@/lib/prisma-client";
 import type { Product } from "@prisma/client";
 
 export async function getProductsFromServer({

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import Credentials from "next-auth/providers/credentials";
 import { LoginSchema } from "@/types/types";
-import { prisma } from "@/lib/prisma-client";
+import prisma from "@/lib/prisma-client";
 import { CredentialsSignin } from "next-auth";
 import { NextAuthConfig } from "next-auth";
 import bcryptjs from "bcryptjs";
