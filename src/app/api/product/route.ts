@@ -47,15 +47,18 @@ export async function POST(req: NextRequest) {
         cacheStrategy: { ttl: 600 },
       }),
     ]);
-
-    return NextResponse.json({
-      products,
-      pagination: {
-        currentPage: page,
-        totalPages: Math.ceil(totalCount / limit),
-        totalItems: totalCount,
-      },
-    });
+      return NextResponse.json({
+        products,
+        pagination: {
+          currentPage: page,
+          totalPages: Math.ceil(totalCount / limit),
+          totalItems: totalCount,
+        },
+      }, {
+        headers: {
+          'Cache-Control': 's-maxage=600, stale-while-revalidate=30'
+        }
+      });
   } catch (error) {
     console.error("API error:", error);
     return new NextResponse("Internal Server Error", { status: 500 });
