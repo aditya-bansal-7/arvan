@@ -19,6 +19,10 @@ export default async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
   const session = (await auth()) as any;
 
+  if(publicRoutes.includes(pathname) || pathname.startsWith("/product") || pathname.startsWith("/api/product") ){
+    return NextResponse.next();
+  }
+
   if (pathname.startsWith("/backend")) {
     const isProd = process.env.NODE_ENV === "production";
     const cookieName = isProd
