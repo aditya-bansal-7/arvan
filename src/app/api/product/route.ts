@@ -33,8 +33,18 @@ export async function POST(req: NextRequest) {
     const [products, totalCount] = await Promise.all([
       prisma.product.findMany({
         where,
-        include: { assets: true },
-        skip,
+        select : {
+          id: true,
+          name: true,
+          price: true,
+          assets : {
+            select : {
+              asset_url: true,
+            }
+          },
+          discountPrice: true,
+          createdAt: true,
+        },
         take: limit,
         orderBy: { [sortBy]: sortOrder },
         //@ts-expect-error: Unreachable code error

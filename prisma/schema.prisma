@@ -3,30 +3,35 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
   directUrl = env("DIRECT_URL")
 }
 
 model Product {
-  id            String         @id @default(cuid())
-  name          String
-  description   String
-  price         Float
-  discountPrice Float?
-  material      String
-  category_id   String
-  avgRating     Float?
-  category      Category     @relation(fields: [category_id], references: [id])
-  createdAt     DateTime       @default(now())
-  updatedAt     DateTime       @updatedAt
-  status        ProductStatus  @default(DRAFT)
-  colors        ProductColor[]
-  assets        ProductAsset[]
-  ProductRating  ProductRating[]
+  id                 String               @id @default(cuid())
+  name               String
+  description        String
+  price              Float
+  discountPrice      Float?
+  material           String
+  category_id        String
+  avgRating          Float?
+  category           Category             @relation(fields: [category_id], references: [id])
+  createdAt          DateTime             @default(now())
+  updatedAt          DateTime             @updatedAt
+  status             ProductStatus        @default(DRAFT)
+  colors             ProductColor[]
+  assets             ProductAsset[]
+  ProductRating      ProductRating[]
   ProductPerformance ProductPerformance[]
-  sales         SalesSummary[]
-  OrderItem     OrderItem[]
+  sales              SalesSummary[]
+  OrderItem          OrderItem[]
+
+  @@index([status])
+  @@index([price])
+  @@index([createdAt])
+  @@index([status, price])
 }
 
 model ProductColor {
@@ -92,26 +97,25 @@ enum VariantsValues {
 }
 
 model User {
-
   id                String    @id @default(cuid())
   name              String?
   mobile_no         String    @unique
   isPhoneNoVerified Boolean   @default(false)
   phoneNoVerified   DateTime?
   image             String?
-  email             String?    @unique
-  isEmailVerified Boolean @default(false)
+  email             String?   @unique
+  isEmailVerified   Boolean   @default(false)
   emailVerified     DateTime?
   accounts          Account[]
   sessions          Session[]
   password          String?
   role              UserType  @default(USER)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
 
-  Order       Order[]
+  Order         Order[]
   ProductRating ProductRating[]
-  Address Address[]
+  Address       Address[]
 
   Otp Otp[]
 }
@@ -146,7 +150,7 @@ model Otp {
   user      User     @relation(fields: [userphone], references: [mobile_no], onDelete: Cascade)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  jwt     String?
+  jwt       String?
 }
 
 model Account {
@@ -171,27 +175,27 @@ model Account {
 }
 
 model Order {
-  id          String           @id @default(cuid())
-  user        User             @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId      String
-  items       OrderItem[] // Join table for order items
-  total       Float
-  status      OrderStatus
-  ShipRocketOrderId Int?
-  awb         String?
-  DeliveryStatus String?       @default("PENDING")
-  etd         String?
-  deliveredAt  DateTime?
-  paid         Boolean         @default(false)
-  fulfillment OrderFulfillment
-  isReturned  Boolean         @default(false)
-  returnedAt   DateTime?
-  returnReason String?
+  id                   String           @id @default(cuid())
+  user                 User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId               String
+  items                OrderItem[] // Join table for order items
+  total                Float
+  status               OrderStatus
+  ShipRocketOrderId    Int?
+  awb                  String?
+  DeliveryStatus       String?          @default("PENDING")
+  etd                  String?
+  deliveredAt          DateTime?
+  paid                 Boolean          @default(false)
+  fulfillment          OrderFulfillment
+  isReturned           Boolean          @default(false)
+  returnedAt           DateTime?
+  returnReason         String?
   returnAdditionalInfo String?
-  addressId   String
-  address     Address          @relation(fields: [addressId], references: [id], onDelete: Cascade)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  addressId            String
+  address              Address          @relation(fields: [addressId], references: [id], onDelete: Cascade)
+  createdAt            DateTime         @default(now())
+  updatedAt            DateTime         @updatedAt
 }
 
 model OrderItem {
@@ -207,8 +211,9 @@ model OrderItem {
   productName      String
   size             String
   productId        String
-  product          Product      @relation(fields: [productId], references: [id], onDelete: Cascade)
+  product          Product        @relation(fields: [productId], references: [id], onDelete: Cascade)
 }
+
 enum OrderStatus {
   PENDING
   COMPLETED
@@ -241,7 +246,6 @@ model VerificationToken {
   @@id([identifier, token])
 }
 
-
 model ProductRating {
   id          String   @id @default(cuid())
   userId      String? // Foreign key for user (optional for guest users)
@@ -256,7 +260,6 @@ model ProductRating {
   // Relations
   user    User?   @relation(fields: [userId], references: [id], onDelete: SetNull)
   product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
-
 }
 
 model Testimonial {
@@ -271,47 +274,46 @@ model Testimonial {
 }
 
 model ContactForm {
-  id          String   @id @default(cuid())
-  name        String
-  email       String
-  phone       String
-  message     String
-  Status      String
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  phone     String
+  message   String
+  Status    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model SalesSummary {
-  id             String   @id @default(uuid())
-  date           DateTime @unique
-  totalRevenue   Float
-  salesGrowth    Float
-  totalOrders    Int
-  newCustomers   Int
+  id           String   @id @default(uuid())
+  date         DateTime @unique
+  totalRevenue Float
+  salesGrowth  Float
+  totalOrders  Int
+  newCustomers Int
 
-  productId      String
-  product        Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
 }
 
 model ProductPerformance {
-  id           String   @id @default(uuid())
-  productId    String
-  product      Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
-  date         DateTime @default(now())
-  revenue      Decimal  @default(0.0) 
-  orders       Int      @default(0)
-  rating       Float?  
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  id        String   @id @default(uuid())
+  productId String
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  date      DateTime @default(now())
+  revenue   Decimal  @default(0.0)
+  orders    Int      @default(0)
+  rating    Float?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@unique([productId, date]) // Ensures one record per product per day
   @@index([date]) // Adds an index on the 'date' field
 }
 
-
 model ShiprocketToken {
-  id     Int      @id @default(1)
-  token  String
+  id        Int      @id @default(1)
+  token     String
   createdAt DateTime @default(now())
 }
 
