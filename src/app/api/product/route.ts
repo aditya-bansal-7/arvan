@@ -4,23 +4,21 @@ import { NextRequest, NextResponse } from "next/server";
 
 export const runtime = "edge";
 
-export async function POST(req: NextRequest) {
+export async function GET(req: NextRequest) {
   try {
-    const body = await req.json();
-    const {
-      page = 1,
-      limit = 12,
-      sortBy = "createdAt",
-      sortOrder = "desc",
-      minPrice,
-      maxPrice,
-      status = "PUBLISHED",
-    } = body;
+    const { searchParams } = new URL(req.url);
+    const page = Number(searchParams.get('page')) || 1;
+    const limit = Number(searchParams.get('limit')) || 12;
+    const sortBy = searchParams.get('sortBy') || "createdAt";
+    const sortOrder = searchParams.get('sortOrder') || "desc";
+    const minPrice = searchParams.get('minPrice') ? Number(searchParams.get('minPrice')) : undefined;
+    const maxPrice = searchParams.get('maxPrice') ? Number(searchParams.get('maxPrice')) : undefined;
+    const status = searchParams.get('status') || "PUBLISHED";
 
     const skip = (page - 1) * limit;
 
     const where = {
-      status,
+      status: status as "PUBLISHED" | "DRAFT",
       ...(minPrice !== undefined && maxPrice !== undefined
         ? { price: { gte: minPrice, lte: maxPrice } }
         : minPrice !== undefined

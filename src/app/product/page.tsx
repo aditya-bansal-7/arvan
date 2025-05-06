@@ -109,16 +109,22 @@ export default function ProductPage() {
     const sortByField = sortFieldMap[sortBy];
     const sortOrder = sortOrderMap[sortBy];
   
-    const response = await axios.post("/api/product", {
-      page: pageParam,
-      limit,
+    const searchParams = new URLSearchParams({
+      page: pageParam.toString(),
+      limit: limit.toString(),
       sortBy: sortByField,
       sortOrder,
-      minPrice,
-      maxPrice,
       status: "PUBLISHED",
     });
-  
+
+    if (minPrice !== undefined) {
+      searchParams.append('minPrice', minPrice.toString());
+    }
+    if (maxPrice !== undefined) {
+      searchParams.append('maxPrice', maxPrice.toString());
+    }
+
+    const response = await axios.get(`/api/product?${searchParams.toString()}`);
     return response.data;
   };
   const {
