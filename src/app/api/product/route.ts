@@ -45,6 +45,7 @@ export async function POST(req: NextRequest) {
           discountPrice: true,
           createdAt: true,
         },
+        skip,
         take: limit,
         orderBy: { [sortBy]: sortOrder },
         //@ts-expect-error: Unreachable code error
