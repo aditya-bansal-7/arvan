@@ -193,7 +193,7 @@ export default function ProductPage() {
           <h1 className="text-[25vw] md:text-[20vw] lg:text-[15vw] absolute top-[45%] left-[25%] lg:left-[35%] -translate-x-1/2 -translate-y-1/2 font-coluna font-bold tracking-wider z-10 text-center">
             STEP
           </h1>
-          <Image src="/slides/2.png" alt="Hero background" width={500} height={500} className="w-full h-full object-contain relative z-[15] -rotate-12" />
+          <Image src="/slides/2.png" alt="Stylish Arvan Slippers" width={500} height={500} className="w-full h-full object-contain relative z-[15] -rotate-12" />
           <h1 className="text-[25vw] md:text-[20vw] lg:text-[15vw] top-[62%] absolute left-[70%] -translate-x-1/2 -translate-y-1/2 font-coluna font-bold tracking-wider z-[20] text-center flex flex-col leading-none">
             <span className="text-4xl inline-block">INTO</span>STYLE.
           </h1>

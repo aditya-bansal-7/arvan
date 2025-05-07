@@ -185,8 +185,8 @@ const ProductDetails: React.FC<{ productId: string }> = ({ productId }) => {
         }
       }
     }
-  }, [productData.data, selectedColor]);    
-  
+  }, [productData.data, selectedColor]);
+
   return (
     <>
       {productData.isLoading ? (
@@ -525,7 +525,7 @@ const ProductDetails: React.FC<{ productId: string }> = ({ productId }) => {
                   </h3>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-3 text-base lg:text-lg">
                     <p className="text-[#b3b3b3]">Description</p>{" "}
-                    <p className="text-white uppercase">
+                    <p className="text-white uppercase text-sm">
                       {productData.data.description}
                     </p>
                     <p className="text-[#b3b3b3]">Material</p>{" "}
@@ -540,6 +540,25 @@ const ProductDetails: React.FC<{ productId: string }> = ({ productId }) => {
                     <p className="text-white">{selectedSize}</p>
                   </div>
                 </div>
+
+                <div className="mt-10 border-t border-white pt-4">
+                  <h3 className="text-2xl mt-5 sm:text-3xl font-montserrat lg:text-4xl font-bold">
+                  Mandatory Product Information
+                  </h3>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-3 text-base lg:text-lg">
+                    <p className="text-[#b3b3b3]">Manufacturer</p>
+                    <p className="text-white uppercase text-sm ">
+                    AK ENTERPRISES E / 120 NOIDA SEC 7 – 201301
+                    </p>
+                    <p className="text-[#b3b3b3]">
+                      Month & Year of Manufacture
+                    </p>
+                    <p className="text-white">{new Date(productData.data.createdAt).toLocaleString('en-US', { month: 'long', year: 'numeric' })}</p>
+                    <p className="text-[#b3b3b3]">MRP</p>
+                    <p className="text-white">₹{productData.data.price.toFixed(2)} (Inclusive of all taxes)</p>
+                  </div>
+                </div>
+
                 <div className="mt-10 border-t border-white pt-4">
                   <h3 className="text-2xl  mt-5 sm:text-3xl lg:text-4xl font-bold">
                     Ratings & Reviews
