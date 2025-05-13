@@ -102,28 +102,14 @@ export default function Footer() {
               </li>
             </ul>
           </div>
+          
 
-          {/* Newsletter */}
-          {/* <div className="space-y-6">
-            <h3 className="text-lg font-medium">NEWSLETTER</h3>
+          {/* Address */}
+          <div className="space-y-6">
             <p className="text-[#999999] text-sm">
-              Sign up for our newsletter and get the latest updates, news and
-              product offers via email.
+              E-120 Sector 7 Noida Uttar Pardesh 201301
             </p>
-            <div className="flex">
-              <Input
-                type="email"
-                placeholder="Email"
-                className="rounded-r-none bg-[#1E1E1E] border-r-0 focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0"
-              />
-              <Button
-                type="submit"
-                className="rounded-l-none bg-white text-black hover:bg-white/90 px-4"
-              >
-                →
-              </Button>
-            </div>
-          </div> */}
+          </div>
         </div>
 
         {/* Bottom Section */}
