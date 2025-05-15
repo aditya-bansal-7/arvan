@@ -7,6 +7,7 @@ import Link from "next/link";
 import { useSession } from "next-auth/react";
 import { useCart } from "@/context/CartContext";
 import Image from "next/image";
+import SignupPopup from "./Sections/SignupPopup";
 
 const navItems = [
   { name: "Home", href: "/" },
@@ -21,6 +22,7 @@ const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const { cart } = useCart();
+  const [showSignupPopup, setShowSignupPopup] = useState(false);
 
   useEffect(() => {
     let timeout: NodeJS.Timeout | null = null;
@@ -81,9 +83,11 @@ const Navbar = () => {
                 <FiUser className="text-lg text-white cursor-pointer hover:text-[#CCFF00]" />
               </Link>
             ) : (
-              <Link href="/signin">
+              <button
+                className="cursor-pointer"
+                onClick={() => setShowSignupPopup(true)}>
                 <FiUser className="text-lg text-white cursor-pointer hover:text-[#CCFF00]" />
-              </Link>
+              </button>
             )}
           </div>
         </div>
@@ -113,9 +117,11 @@ const Navbar = () => {
                   <FiUser className="..." />
                 </Link>
               ) : (
-                <Link href="/signin">
+                <button
+                  className="cursor-pointer"
+                  onClick={() => setShowSignupPopup(true)}>
                   <FiUser className="..." />
-                </Link>
+                </button>
               )}
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -141,6 +147,9 @@ const Navbar = () => {
             ))}
           </div>
         </div>
+      )}
+      {showSignupPopup && (
+        <SignupPopup onClose={() => setShowSignupPopup(false)} />
       )}
     </>
   );

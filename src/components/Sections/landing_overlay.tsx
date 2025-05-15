@@ -48,9 +48,8 @@ const Landing_overlay = forwardRef<HTMLDivElement>((_, ref) => {
         {/* Render all images but only show the hovered one */}
 
         {slides.map((slide, i) => (
-          <>
+          <div key={`slide-${i}`}>
           <div
-            key={`img-${i}`}
             className={`absolute w-full h-full top-0 left-0 z-10 transition-opacity duration-500 ease-in-out ${
               hoveredIndex === i ? "opacity-100" : "opacity-0"
             }`}
@@ -64,7 +63,6 @@ const Landing_overlay = forwardRef<HTMLDivElement>((_, ref) => {
             />
           </div>
           <div
-            key={i}
             className="relative z-40"
             onMouseEnter={() => setHoveredIndex(i)} // Set hovered index
             onMouseLeave={() => setHoveredIndex(null)} // Reset hovered index
@@ -81,7 +79,7 @@ const Landing_overlay = forwardRef<HTMLDivElement>((_, ref) => {
               {slide.name}
             </h3>
           </div>
-          </>
+          </div>
         ))}
 
         <button

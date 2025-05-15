@@ -82,7 +82,7 @@ export default async function middleware(req: NextRequest) {
 // Ensure middleware runs on relevant routes
 export const config = {
   matcher: [
-    "/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)",
+    "/((?!_next|api/auth|.*\\.(?:png|jpg|jpeg|svg|js|css|woff2?|ico|json|webmanifest)).*)",
     "/backend/(.*)",
     "/admin/(.*)",
     "/signin",
