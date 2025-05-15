@@ -3,6 +3,9 @@ import Link from "next/link";
 import {  ShoppingCart, User } from "lucide-react";
 import Image from "next/image";
 import { useCart } from "@/context/CartContext";
+import SignupPopup from "./Sections/SignupPopup";
+import { useState } from "react";
+import { useSession } from "next-auth/react";
 
 export default function Navigation() {
   const navItems = [
@@ -29,6 +32,10 @@ export default function Navigation() {
   ];
 
   const { cart } = useCart();
+  const [showSignupPopup, setShowSignupPopup] = useState(false);
+  const { data: session } = useSession();
+  
+  
 
   return (
     <nav className=" text-white w-full overflow-x-hidden py-4 px-6 border-b border-gray-800 relative z-50">
@@ -69,11 +76,23 @@ export default function Navigation() {
               {cart.length > 0 ? cart.length : 0}
             </div>
           </Link>
-          <Link href="/profile" className="hover:text-[#CCFF00]">
-            <User className="w-5 h-5" />
-          </Link>
+          {session?.user ? (
+                <Link
+                  href={session.user.role === "ADMIN" ? "/admin" : "/profile"}>
+                  <User className="..." />
+                </Link>
+              ) : (
+                <button
+                  className="cursor-pointer"
+                  onClick={() => setShowSignupPopup(true)}>
+                  <User className="..." />
+                </button>
+              )}
         </div>
       </div>
+      {showSignupPopup && (
+        <SignupPopup onClose={() => setShowSignupPopup(false)} />
+      )}
     </nav>
   );
 }

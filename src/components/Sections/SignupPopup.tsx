@@ -31,7 +31,7 @@ const SignupPopup = ({ onClose }: { onClose: () => void }) => {
     try {
       const res = await apiClient.post("/api/customers/otp", {
         mobile_no: mobileNumber,
-        type: "verify", // or "verify" depending on context
+        type: "verify",
       });
 
       if (res.status === 202) {
@@ -40,7 +40,7 @@ const SignupPopup = ({ onClose }: { onClose: () => void }) => {
       }
 
       if (res.data.jwt) {
-        setOtpJwt(res.data.jwt); // ✅ save jwt in state
+        setOtpJwt(res.data.jwt);
       }
 
       toast.success("OTP sent via WhatsApp");
@@ -98,7 +98,7 @@ const SignupPopup = ({ onClose }: { onClose: () => void }) => {
     try {
       const res = await apiClient.post("/api/customers/otp", {
         mobile_no: mobileNumber,
-        type: "verify", // or "verify" depending on context
+        type: "verify",
       });
 
       if (res.status === 202) {
@@ -107,11 +107,10 @@ const SignupPopup = ({ onClose }: { onClose: () => void }) => {
       }
 
       if (res.data.jwt) {
-        setOtpJwt(res.data.jwt); // ✅ save jwt in state
+        setOtpJwt(res.data.jwt);
       }
 
-      toast.success("OTP sent via WhatsApp");
-      setStep("otp");
+      toast.success("OTP resent via WhatsApp");
       startResendTimer();
     } catch (error) {
       console.error("Error resending OTP:", error);
@@ -150,18 +149,22 @@ const SignupPopup = ({ onClose }: { onClose: () => void }) => {
         onClick={onClose}
       />
       <div
-        className="fixed inset-0 flex items-center justify-center z-50 p-4"
-        onClick={(e) => e.stopPropagation()}>
+        className="fixed inset-0 flex sm:items-center sm:justify-center items-end justify-center z-50 p-0 sm:p-4"
+        onClick={(e) => e.stopPropagation()}
+      >
         <motion.div
-          initial={{ scale: 0.9, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          exit={{ scale: 0.9, opacity: 0 }}
-          className="bg-gradient-to-b from-[#1a1a1a] to-[#252525] text-white rounded-2xl w-full sm:w-[450px] max-w-[95%] overflow-hidden shadow-2xl relative border border-lime-400/30">
+          initial={{ y: "100%", opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          exit={{ y: "100%", opacity: 0 }}
+          transition={{ duration: 0.3 }}
+          className="bg-gradient-to-b from-[#1a1a1a] to-[#252525] text-white rounded-t-2xl sm:rounded-2xl w-full sm:w-[450px] max-w-[%] sm:max-h-[90%] sm:relative fixed bottom-0 sm:bottom-auto left-0 sm:left-auto h-[60%] sm:h-auto shadow-2xl z-50 border border-lime-400/30 overflow-y-auto"
+        >
           <Button
             onClick={onClose}
             variant="ghost"
             className="absolute top-4 right-4 text-white rounded-full p-2 hover:bg-white/10 z-10"
-            size="icon">
+            size="icon"
+          >
             <IoClose size={20} />
           </Button>
 
@@ -173,21 +176,21 @@ const SignupPopup = ({ onClose }: { onClose: () => void }) => {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
                 transition={{ duration: 0.3 }}
-                className="px-8 py-10">
-                <form
-                  onSubmit={handleMobileSubmit}
-                  className="flex flex-col gap-6">
+                className="px-6 py-8 sm:px-8 sm:py-10"
+              >
+                <form onSubmit={handleMobileSubmit} className="flex flex-col gap-6">
                   <div className="text-center space-y-2">
-                    <h2 className="text-3xl font-bold bg-gradient-to-r from-lime-300 to-lime-500 bg-clip-text text-transparent">
+                    <h2 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-lime-300 to-lime-500 bg-clip-text text-transparent">
                       Welcome to Arvan
                     </h2>
-                    <p className="text-gray-400">
+                    <p className="text-gray-400 text-sm sm:text-base">
                       Enter your mobile number to continue
                     </p>
                   </div>
 
                   <div
-                    className={`${styles.phoneContainer} rounded-xl border-2 border-lime-400 bg-gradient-to-r from-[#2e470fb4] via-[#3a5b0bc9] to-[#3a5b0b49] mt-4`}>
+                    className={`${styles.phoneContainer} rounded-xl border-2 border-lime-400 bg-gradient-to-r from-[#2e470fb4] via-[#3a5b0bc9] to-[#3a5b0b49] mt-4`}
+                  >
                     <PhoneInput
                       country={"in"}
                       value={mobileNumber}
@@ -207,8 +210,9 @@ const SignupPopup = ({ onClose }: { onClose: () => void }) => {
 
                   <Button
                     type="submit"
-                    className="relative w-full p-3 text-black font-bold text-lg rounded-xl bg-lime-400 shadow-[0_4px_20px_rgba(132,204,22,0.4)] hover:bg-lime-500 transition-all duration-300 mt-4"
-                    disabled={isSubmitting}>
+                    className="w-full p-3 text-black font-bold text-base sm:text-lg rounded-xl bg-lime-400 shadow-[0_4px_20px_rgba(132,204,22,0.4)] hover:bg-lime-500 transition-all duration-300 mt-4"
+                    disabled={isSubmitting}
+                  >
                     {isSubmitting ? "Sending OTP..." : "Continue"}
                   </Button>
                 </form>
@@ -220,17 +224,15 @@ const SignupPopup = ({ onClose }: { onClose: () => void }) => {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
                 transition={{ duration: 0.3 }}
-                className="px-8 py-10">
-                <form
-                  onSubmit={handleVerifyOTP}
-                  className="flex flex-col gap-6">
+                className="px-6 py-8 sm:px-8 sm:py-10"
+              >
+                <form onSubmit={handleVerifyOTP} className="flex flex-col gap-6">
                   <div className="text-center space-y-2">
-                    <h2 className="text-3xl font-bold bg-gradient-to-r from-lime-300 to-lime-500 bg-clip-text text-transparent">
+                    <h2 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-lime-300 to-lime-500 bg-clip-text text-transparent">
                       Verify OTP
                     </h2>
-                    <p className="text-gray-400 flex items-center justify-center gap-2">
-                      OTP sent via <FaWhatsapp className="text-green-500" /> to{" "}
-                      {mobileNumber}
+                    <p className="text-gray-400 text-sm sm:text-base flex items-center justify-center gap-2">
+                      OTP sent via <FaWhatsapp className="text-green-500" /> to {mobileNumber}
                     </p>
                   </div>
 
@@ -251,7 +253,8 @@ const SignupPopup = ({ onClose }: { onClose: () => void }) => {
                         type="button"
                         variant="link"
                         onClick={handleResend}
-                        className="text-lime-400 hover:text-lime-500">
+                        className="text-lime-400 hover:text-lime-500"
+                      >
                         Resend OTP
                       </Button>
                     )}
@@ -259,8 +262,9 @@ const SignupPopup = ({ onClose }: { onClose: () => void }) => {
 
                   <Button
                     type="submit"
-                    className="relative w-full p-3 text-black font-bold text-lg rounded-xl bg-lime-400 shadow-[0_4px_20px_rgba(132,204,22,0.4)] hover:bg-lime-500 transition-all duration-300"
-                    disabled={isVerifying}>
+                    className="w-full p-3 text-black font-bold text-base sm:text-lg rounded-xl bg-lime-400 shadow-[0_4px_20px_rgba(132,204,22,0.4)] hover:bg-lime-500 transition-all duration-300"
+                    disabled={isVerifying}
+                  >
                     {isVerifying ? "Verifying..." : "Verify OTP"}
                   </Button>
 
@@ -268,7 +272,8 @@ const SignupPopup = ({ onClose }: { onClose: () => void }) => {
                     type="button"
                     variant="ghost"
                     className="text-gray-400 hover:text-white"
-                    onClick={() => setStep("mobile")}>
+                    onClick={() => setStep("mobile")}
+                  >
                     Change mobile number
                   </Button>
                 </form>
