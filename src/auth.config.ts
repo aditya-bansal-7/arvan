@@ -11,8 +11,6 @@ import jwt from "jsonwebtoken";
 
 function verifyToken(token: string) {
   try {
-    console.log('Verifying token:', token);
-    console.log('NEXTAUTH_SECRET:', process.env.NEXTAUTH_SECRET);
     const verified = jwt.verify(token, process.env.NEXTAUTH_SECRET!);
     console.log('Token verification result:', verified);
     return verified;

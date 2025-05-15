@@ -47,6 +47,7 @@ const SignupPopup = ({ onClose }: { onClose: () => void }) => {
       setStep("otp");
       startResendTimer();
     } catch (error) {
+      console.error("Error sending OTP:", error);
       toast.error("Failed to send OTP");
     } finally {
       setIsSubmitting(false);
@@ -86,6 +87,7 @@ const SignupPopup = ({ onClose }: { onClose: () => void }) => {
 
       onClose();
     } catch (error) {
+      console.error("Error verifying OTP:", error);
       toast.error("Invalid OTP or session expired");
     } finally {
       setIsVerifying(false);
@@ -112,6 +114,7 @@ const SignupPopup = ({ onClose }: { onClose: () => void }) => {
       setStep("otp");
       startResendTimer();
     } catch (error) {
+      console.error("Error resending OTP:", error);
       toast.error("Resend failed");
     }
   };
