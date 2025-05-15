@@ -20,6 +20,8 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { Swiper as Swiper2 } from "swiper/types";
+import { useSession } from "next-auth/react";
+import SignupPopup from "./SignupPopup";
 
 const ProductDetails: React.FC<{ productId: string }> = ({ productId }) => {
   const [showReviewModal, setShowReviewModal] = useState(false);
@@ -31,6 +33,8 @@ const ProductDetails: React.FC<{ productId: string }> = ({ productId }) => {
   const [availableSizes, setAvailableSizes] = useState<string[]>([]);
   const { addToCart } = useCart();
   const router = useRouter();
+  const { data: session } = useSession();
+  const [showSignupPopup, setShowSignupPopup] = useState(false);
 
   const handlecloseReviewModal = () => {
     setShowReviewModal(false);
@@ -433,6 +437,12 @@ const ProductDetails: React.FC<{ productId: string }> = ({ productId }) => {
                       <button
                         className="w-full h-10 bg-[#c2e53a] rounded-xl text-black text-xl font-medium uppercase font-montserrat"
                         onClick={() => {
+
+                          if(!session?.user){
+                            setShowSignupPopup(true);
+                            return;
+                          }
+
                           if (availableSizes.length === 0) {
                             toast.error(
                               `Please select a color first to see available sizes.`,
@@ -523,7 +533,7 @@ const ProductDetails: React.FC<{ productId: string }> = ({ productId }) => {
                     </div>
                   </div>
                 </div>
-             
+
                 {/* Product Details */}
                 <div className="mt-10 border-t border-white pt-4">
                   <h3 className="text-2xl mt-5 sm:text-3xl font-montserrat lg:text-4xl font-bold">
@@ -546,7 +556,7 @@ const ProductDetails: React.FC<{ productId: string }> = ({ productId }) => {
                     <p className="text-white">{selectedSize}</p>
                   </div>
                 </div>
-                   <div className="mt-10 border-t border-white pt-4">
+                <div className="mt-10 border-t border-white pt-4">
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-5">
                     {/* Free Shipping */}
                     <div className="flex flex-col items-center text-center p-4 border border-gray-700 rounded-lg">
@@ -616,7 +626,6 @@ const ProductDetails: React.FC<{ productId: string }> = ({ productId }) => {
                           height="24"
                           viewBox="0 0 24 24"
                           fill="none"
-                          
                           role="img"
                           color="#c2e53a">
                           <path
@@ -676,7 +685,7 @@ const ProductDetails: React.FC<{ productId: string }> = ({ productId }) => {
                     </p>
                   </div>
                 </div>
-                
+
                 <div className="mt-10 border-t border-white pt-4">
                   <h3 className="text-2xl  mt-5 sm:text-3xl lg:text-4xl font-bold">
                     Ratings & Reviews
@@ -760,6 +769,9 @@ const ProductDetails: React.FC<{ productId: string }> = ({ productId }) => {
           <div className="w-full mt-10">
             <Footer />
           </div>
+          {showSignupPopup && (
+            <SignupPopup onClose={() => setShowSignupPopup(false)} />
+          )}
         </>
       ) : (
         productData.isError && <h1>Something went wrong.</h1>
