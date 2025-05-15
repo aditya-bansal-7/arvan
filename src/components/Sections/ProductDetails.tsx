@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
-import { Star, ShoppingCart } from "lucide-react";
+import { Star, ShoppingCart, Truck } from "lucide-react";
 import Image from "next/image";
 import ReviewWritings from "../reviewWriting";
 import { useQueries } from "@tanstack/react-query";
@@ -288,28 +288,35 @@ const ProductDetails: React.FC<{ productId: string }> = ({ productId }) => {
                       {productData.data.name}
                     </h2>
                     <div className="flex items-center gap-2  my-2 flex-wrap">
-                      <p className="text-white font-montserrat text-lg sm:text-xl font-bold">
-                        {/* {remainProduct.currency} */}₹{" "}
-                        {productData.data.discountPrice
-                          ? productData.data.discountPrice
-                          : productData.data.price}
-                      </p>
-                      {productData.data.discountPrice && (
-                        <p className="text-[#858585] text-lg sm:text-xl font-bold  line-through">
-                          ₹ {productData.data.price}
-                        </p>
-                      )}
-                      {productData.data.discountPrice && (
-                        <div className="text-black text-normal border font-montserrat  rounded-xl  bg-[#C2E53A] font-bold px-2">
-                          {(
-                            ((productData.data.price -
-                              productData.data.discountPrice!) /
-                              productData.data.price) *
-                            100
-                          ).toFixed(2)}
-                          %
+                      <div className="flex flex-col">
+                        <div className="flex items-center gap-2">
+                          <p className="text-white font-montserrat text-lg sm:text-xl font-bold">
+                            {/* {remainProduct.currency} */}₹{" "}
+                            {productData.data.discountPrice
+                              ? productData.data.discountPrice
+                              : productData.data.price}
+                          </p>
+                          {productData.data.discountPrice && (
+                            <p className="text-[#858585] text-lg sm:text-xl font-bold  line-through">
+                              ₹ {productData.data.price}
+                            </p>
+                          )}
+                          {productData.data.discountPrice && (
+                            <div className="text-black text-normal border font-montserrat  rounded-xl  bg-[#C2E53A] font-bold px-2">
+                              {(
+                                ((productData.data.price -
+                                  productData.data.discountPrice!) /
+                                  productData.data.price) *
+                                100
+                              ).toFixed(2)}
+                              %
+                            </div>
+                          )}
                         </div>
-                      )}
+                        <span className="text-[#858585] text-xs mt-1">
+                          inclusive of all taxes
+                        </span>
+                      </div>
                     </div>
                   </div>
                   <div className="md:w-[20%] flex flex-col items-start sm:items-center gap-1 mt-2 sm:mt-0">
@@ -338,7 +345,6 @@ const ProductDetails: React.FC<{ productId: string }> = ({ productId }) => {
                     )}
                   </div>
                 </div>
-
                 {/* </div> */}
                 <hr className="border-gray-600 my-4" />
                 {/* Color Selection */}
@@ -517,7 +523,7 @@ const ProductDetails: React.FC<{ productId: string }> = ({ productId }) => {
                     </div>
                   </div>
                 </div>
-
+             
                 {/* Product Details */}
                 <div className="mt-10 border-t border-white pt-4">
                   <h3 className="text-2xl mt-5 sm:text-3xl font-montserrat lg:text-4xl font-bold">
@@ -540,25 +546,137 @@ const ProductDetails: React.FC<{ productId: string }> = ({ productId }) => {
                     <p className="text-white">{selectedSize}</p>
                   </div>
                 </div>
+                   <div className="mt-10 border-t border-white pt-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-5">
+                    {/* Free Shipping */}
+                    <div className="flex flex-col items-center text-center p-4 border border-gray-700 rounded-lg">
+                      <div className="relative mb-3">
+                        <Truck className="text-[#c2e53a]" />
+                      </div>
+                      <h4 className="text-lg font-semibold mb-1">
+                        Free Shipping
+                      </h4>
+                      <p className="text-sm text-gray-400">
+                        Free shipping for all orders.
+                      </p>
+                    </div>
 
+                    {/* Cash on Delivery */}
+                    <div className="flex flex-col items-center text-center p-4 border border-gray-700 rounded-lg">
+                      <div className="mb-3">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          role="img"
+                          color="#c2e53a">
+                          <path
+                            d="M2 4.5H10L14 8"
+                            stroke="#c2e53a"
+                            stroke-width="1.5"
+                            stroke-linecap="square"></path>
+                          <path
+                            d="M5 13.5H2"
+                            stroke="#c2e53a"
+                            stroke-width="1.5"
+                            stroke-linecap="square"></path>
+                          <path
+                            d="M8.5 7.5L10.5 9.5C11.0523 10.0523 11.0523 10.9477 10.5 11.5C9.94772 12.0523 9.05229 12.0523 8.5 11.5L7 10C6.13931 10.8607 4.77671 10.9575 3.80294 10.2272L3.5 10"
+                            stroke="#c2e53a"
+                            stroke-width="1.5"
+                            stroke-linecap="square"></path>
+                          <path
+                            d="M5 11V19.5H22V8.5H10"
+                            stroke="#c2e53a"
+                            stroke-width="1.5"
+                            stroke-linecap="square"></path>
+                          <path
+                            d="M15.25 14C15.25 14.9665 14.4665 15.75 13.5 15.75C12.5335 15.75 11.75 14.9665 11.75 14C11.75 13.0335 12.5335 12.25 13.5 12.25C14.4665 12.25 15.25 13.0335 15.25 14Z"
+                            stroke="#c2e53a"
+                            stroke-width="1.5"
+                            stroke-linecap="square"></path>
+                        </svg>
+                      </div>
+                      <h4 className="text-lg font-semibold mb-1">
+                        Cash on Delivery
+                      </h4>
+                      <p className="text-sm text-gray-400">
+                        Cash on delivery at Zero Cost.
+                      </p>
+                    </div>
+
+                    {/* Easy Return */}
+                    <div className="flex flex-col items-center text-center p-4 border border-gray-700 rounded-lg">
+                      <div className="mb-3">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          
+                          role="img"
+                          color="#c2e53a">
+                          <path
+                            d="M2 8L5 2L19 2.00001L22 8"
+                            stroke="#c2e53a"
+                            stroke-width="1.5"></path>
+                          <path
+                            d="M12 8V2"
+                            stroke="#c2e53a"
+                            stroke-width="1.5"></path>
+                          <path
+                            d="M9 12H15"
+                            stroke="#c2e53a"
+                            stroke-width="1.5"></path>
+                          <path
+                            d="M22 13V8H2V22H19C20.6569 22 22 20.6569 22 19C22 17.3431 20.6569 16 19 16L15.5 16"
+                            stroke="#c2e53a"
+                            stroke-width="1.5"
+                            stroke-linejoin="round"></path>
+                          <path
+                            d="M18 13.5L15.5 16L18 18.5"
+                            stroke="#c2e53a"
+                            stroke-width="1.5"></path>
+                        </svg>
+                      </div>
+                      <h4 className="text-lg font-semibold mb-1">
+                        Easy Return
+                      </h4>
+                      <p className="text-sm text-gray-400">
+                        Free 7 day Return and Exchange.
+                      </p>
+                    </div>
+                  </div>
+                </div>
                 <div className="mt-10 border-t border-white pt-4">
                   <h3 className="text-2xl mt-5 sm:text-3xl font-montserrat lg:text-4xl font-bold">
-                  Mandatory Product Information
+                    Mandatory Product Information
                   </h3>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-3 text-base lg:text-lg">
                     <p className="text-[#b3b3b3]">Manufacturer</p>
                     <p className="text-white uppercase text-sm ">
-                    AK ENTERPRISES E / 120 NOIDA SEC 7 – 201301
+                      AK ENTERPRISES E / 120 NOIDA SEC 7 – 201301
                     </p>
                     <p className="text-[#b3b3b3]">
                       Month & Year of Manufacture
                     </p>
-                    <p className="text-white">{new Date(productData.data.createdAt).toLocaleString('en-US', { month: 'long', year: 'numeric' })}</p>
+                    <p className="text-white">
+                      {new Date(productData.data.createdAt).toLocaleString(
+                        "en-US",
+                        { month: "long", year: "numeric" }
+                      )}
+                    </p>
                     <p className="text-[#b3b3b3]">MRP</p>
-                    <p className="text-white">₹{productData.data.price.toFixed(2)} (Inclusive of all taxes)</p>
+                    <p className="text-white">
+                      ₹{productData.data.price.toFixed(2)} (Inclusive of all
+                      taxes)
+                    </p>
                   </div>
                 </div>
-
+                
                 <div className="mt-10 border-t border-white pt-4">
                   <h3 className="text-2xl  mt-5 sm:text-3xl lg:text-4xl font-bold">
                     Ratings & Reviews
