@@ -138,7 +138,6 @@ const Signin = () => {
   };
 
   const verifyOtp = async () => {
-    const mobile = form.getValues("mobileNumber");
     if (!otpJwt) {
       toast.error("Session expired. Please request a new OTP.");
       return;
